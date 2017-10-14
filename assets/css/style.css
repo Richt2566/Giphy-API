@@ -3,6 +3,10 @@ button {
 	color: blue;
 	}
 
+div {
+	display: inline-block;
+}
+
 /*input:focus::-webkit-input-placeholder { 
 	color:transparent; 
 }*/
