@@ -1,6 +1,6 @@
 
 //an array to hold the subjects of the buttons
-var animals = ["dog", "rabbit", "goat", "frog"];
+var animals = ["dog", "rabbit", "goat", "frog", "owl", "lion", "tiger", "bear", "monkey"];
 
 //function to clear the form from previous user input 
 function clearField() {
@@ -20,30 +20,27 @@ function populateButtons() {
           a.addClass("animal");
           // add an attribute to each new button
           a.attr("data-animal", animals[i]);
-
-          //a.attr("data-state", "still");
-          
-          //a.attr("src", animals[i].images.fixed_height_still.url);
-
+          // add text for the buttons
           a.text(animals[i]);
-          
+          // append the buttons to the html 
           $("#buttonpit").append(a);
         }
       }
 
 // buttons on click will appear based on user input
 $("#add-animal").on("click", function(event) {
+        // prevent page from reloading
         event.preventDefault();
-
+        // collect the value of user input
         var animal = $("#animal-input").val();
-
+        // push user input into array
         animals.push(animal);
-
+        // clear text box for a cleaner input
         clearField();
 
-  		populateButtons();
-
-  		$(".animal").click(ajaxCaller);
+  		  populateButtons();
+        // call ajax function when class animal gets clicked
+  		  $(".animal").click(ajaxCaller);
 
 });
 
@@ -51,12 +48,8 @@ $("#add-animal").on("click", function(event) {
 $(document).ready(function(){
 
 	populateButtons();
-
+  // call ajax when any button gets clicked
 	$("button").click(ajaxCaller);
-
-	$("#gifs").on("click", function(){
-		console.log("rich");
-	});
 
 });
 
@@ -72,38 +65,36 @@ function ajaxCaller() {
 	    	}).done(function(response) {
 
 	      var results = response.data;
-
+        // loop through api for ten gifs
 	      for (var i = 0; i < results.length; i++) {
+          // create div for new populated gif
 	        var gifDiv = $("<div class='item'>");
-
+          // display ratings of gifs
 	        var rating = results[i].rating;
 
 	        var p = $("<p>").text("Rating: " + rating);
-
-	        //var animalImage = $("<img>");
-
-	        var animalImage = $('<img class="gif" src="' + response.data[i].images.fixed_height_still.url + '">');
-	        //animalImage.attr("src", results[i].images.fixed_height.url);
-
+          // setting variable for gif file path
+	        var animalImage = $('<img class="gif" src="' + response.data[i].images.fixed_height.url + '">');
+          // prepend both rating and gif image
 	        gifDiv.prepend(p);
 	        gifDiv.prepend(animalImage);
 
 	        $("#gifs").prepend(gifDiv);
 
-	        //$("#gifs").append('<img class="gif" src="' + response.data[i].images.fixed_height_still.url + '">');
 	      } 
 		});
+}
 
-	    }
-
+// on click make the gifs pause
 $('body').on('click','.gif', function() {
+      // setting variable for src attribute
     	var src = $(this).attr("src");
+      // if statement saying if gif is running, make it stop...
       if($(this).hasClass('playing')){
-         //stop
          $(this).attr('src', src.replace(/\.gif/i, "_s.gif"))
          $(this).removeClass('playing');
       } else {
-        //play
+        // if gif is stopped make it play...
         $(this).addClass('playing');
         $(this).attr('src', src.replace(/\_s.gif/i, ".gif"))
       }
