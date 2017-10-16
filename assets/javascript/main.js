@@ -51,13 +51,22 @@ $(document).ready(function(){
   // call ajax when any button gets clicked
 	$("button").click(ajaxCaller);
 
+  $("#remove").on("click", function() {
+    //$("#gifs").toggle();
+  });
+
 });
 
 // ajax call to get the gif
 function ajaxCaller() {
+    //setting variable for which gifs display
+    var offsetNumber = 10;
+    // setting variable to make gifs randomize by each click
+    var offsetResult = offsetNumber * Math.floor(Math.random()*100);
 
+    //setting path for the ajax call
     var animal = $(this).attr("data-animal");
-    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + animal + "&api_key=dc6zaTOxFJmzC&limit=10";
+    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + animal + "&api_key=dc6zaTOxFJmzC&limit=10&offset=" + offsetResult;
 
 	$.ajax({
 	      url: queryURL,
@@ -65,6 +74,7 @@ function ajaxCaller() {
 	    	}).done(function(response) {
 
 	      var results = response.data;
+
         // loop through api for ten gifs
 	      for (var i = 0; i < results.length; i++) {
           // create div for new populated gif
