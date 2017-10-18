@@ -88,7 +88,7 @@ function ajaxCaller() {
           // prepend both rating and gif image
 	        gifDiv.prepend(p);
 	        gifDiv.prepend(animalImage);
-
+          //prepend the gifs to the HTML
 	        $("#gifs").prepend(gifDiv);
 
 	      } 
@@ -101,11 +101,13 @@ $('body').on('click','.gif', function() {
     	var src = $(this).attr("src");
       // if statement saying if gif is running, make it stop...
       if($(this).hasClass('playing')){
-         $(this).attr('src', src.replace(/\.gif/i, "_s.gif"))
+        // I switched the attr's around (it seems to run better this way?)
+         $(this).attr('src', src.replace(/\_s.gif/, ".gif"))
          $(this).removeClass('playing');
       } else {
         // if gif is stopped make it play...
         $(this).addClass('playing');
-        $(this).attr('src', src.replace(/\_s.gif/i, ".gif"))
+        // I switched the attr's around (it seems to run better this way?)
+        $(this).attr('src', src.replace(/\.gif/, "_s.gif"))
       }
     });
